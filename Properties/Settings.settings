@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PhotofilesRename.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LastFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastWildcard" Type="System.String" Scope="User">
+      <Value Profile="(Default)">*.*</Value>
+    </Setting>
+    <Setting Name="PrefixNewFilename" Type="System.String" Scope="User">
+      <Value Profile="(Default)">IMG_</Value>
+    </Setting>
+    <Setting Name="UniqueNewFilename" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Date_time</Value>
+    </Setting>
+    <Setting Name="SupplementNewFilename" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Camera</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
