@@ -9,8 +9,8 @@
     <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-	<AssemblyVersion>6.22.0727</AssemblyVersion>
-	<FileVersion>6.22.0727</FileVersion>
+	<AssemblyVersion>6.22.0730</AssemblyVersion>
+	<FileVersion>6.22.0730</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

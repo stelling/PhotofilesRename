@@ -39,6 +39,7 @@
 			this.lblFolder = new System.Windows.Forms.Label();
 			this.tcMain = new System.Windows.Forms.TabControl();
 			this.tpRename = new System.Windows.Forms.TabPage();
+			this.pbCurrentPhoto = new System.Windows.Forms.PictureBox();
 			this.btnExecuteRename = new System.Windows.Forms.Button();
 			this.FillDataGridView = new System.Windows.Forms.Button();
 			this.btnSetNewNames = new System.Windows.Forms.Button();
@@ -63,6 +64,7 @@
 			panel.SuspendLayout();
 			this.tcMain.SuspendLayout();
 			this.tpRename.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pbCurrentPhoto)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dgvFolderContent)).BeginInit();
 			this.tpCameras.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvCamera)).BeginInit();
@@ -166,11 +168,12 @@
 			this.tcMain.Margin = new System.Windows.Forms.Padding(2);
 			this.tcMain.Name = "tcMain";
 			this.tcMain.SelectedIndex = 0;
-			this.tcMain.Size = new System.Drawing.Size(1776, 679);
+			this.tcMain.Size = new System.Drawing.Size(1777, 740);
 			this.tcMain.TabIndex = 1;
 			// 
 			// tpRename
 			// 
+			this.tpRename.Controls.Add(this.pbCurrentPhoto);
 			this.tpRename.Controls.Add(this.btnExecuteRename);
 			this.tpRename.Controls.Add(this.FillDataGridView);
 			this.tpRename.Controls.Add(this.btnSetNewNames);
@@ -187,10 +190,22 @@
 			this.tpRename.Margin = new System.Windows.Forms.Padding(2);
 			this.tpRename.Name = "tpRename";
 			this.tpRename.Padding = new System.Windows.Forms.Padding(2);
-			this.tpRename.Size = new System.Drawing.Size(1768, 650);
+			this.tpRename.Size = new System.Drawing.Size(1769, 711);
 			this.tpRename.TabIndex = 0;
 			this.tpRename.Text = "Rename files";
 			this.tpRename.UseVisualStyleBackColor = true;
+			// 
+			// pbCurrentPhoto
+			// 
+			this.pbCurrentPhoto.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pbCurrentPhoto.Location = new System.Drawing.Point(1476, 421);
+			this.pbCurrentPhoto.Name = "pbCurrentPhoto";
+			this.pbCurrentPhoto.Size = new System.Drawing.Size(278, 282);
+			this.pbCurrentPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.pbCurrentPhoto.TabIndex = 13;
+			this.pbCurrentPhoto.TabStop = false;
 			// 
 			// btnExecuteRename
 			// 
@@ -245,7 +260,6 @@
 			this.tbWildcard.Name = "tbWildcard";
 			this.tbWildcard.Size = new System.Drawing.Size(122, 23);
 			this.tbWildcard.TabIndex = 6;
-			this.tbWildcard.Leave += new System.EventHandler(this.tbWildcard_Leave);
 			// 
 			// lblWildcard
 			// 
@@ -286,8 +300,9 @@
 			this.dgvFolderContent.Name = "dgvFolderContent";
 			this.dgvFolderContent.RowHeadersWidth = 62;
 			this.dgvFolderContent.RowTemplate.Height = 30;
-			this.dgvFolderContent.Size = new System.Drawing.Size(1431, 593);
+			this.dgvFolderContent.Size = new System.Drawing.Size(1431, 654);
 			this.dgvFolderContent.TabIndex = 3;
+			this.dgvFolderContent.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFolderContent_RowEnter);
 			// 
 			// tbcFilename
 			// 
@@ -359,7 +374,7 @@
 			this.tpCameras.Margin = new System.Windows.Forms.Padding(2);
 			this.tpCameras.Name = "tpCameras";
 			this.tpCameras.Padding = new System.Windows.Forms.Padding(2);
-			this.tpCameras.Size = new System.Drawing.Size(1768, 651);
+			this.tpCameras.Size = new System.Drawing.Size(1769, 712);
 			this.tpCameras.TabIndex = 1;
 			this.tpCameras.Text = "Camera\'s";
 			this.tpCameras.UseVisualStyleBackColor = true;
@@ -376,7 +391,7 @@
 			this.dgvCamera.Name = "dgvCamera";
 			this.dgvCamera.RowHeadersWidth = 62;
 			this.dgvCamera.RowTemplate.Height = 33;
-			this.dgvCamera.Size = new System.Drawing.Size(1764, 647);
+			this.dgvCamera.Size = new System.Drawing.Size(1765, 708);
 			this.dgvCamera.TabIndex = 0;
 			// 
 			// tbcCameramodel
@@ -401,7 +416,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1776, 679);
+			this.ClientSize = new System.Drawing.Size(1777, 740);
 			this.Controls.Add(this.tcMain);
 			this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.Margin = new System.Windows.Forms.Padding(2);
@@ -415,6 +430,7 @@
 			this.tcMain.ResumeLayout(false);
 			this.tpRename.ResumeLayout(false);
 			this.tpRename.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pbCurrentPhoto)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dgvFolderContent)).EndInit();
 			this.tpCameras.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvCamera)).EndInit();
@@ -454,5 +470,6 @@
 		private DataGridViewTextBoxColumn tbcCamera;
 		private DataGridViewTextBoxColumn tbcTitle;
 		private DataGridViewTextBoxColumn tbcNewName;
+		private PictureBox pbCurrentPhoto;
 	}
 }

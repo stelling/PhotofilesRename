@@ -56,6 +56,7 @@ namespace PhotofilesRename
 			{
 				Properties.Settings.Default.LastFolder = tbFolder.Text;
 			}
+			Properties.Settings.Default.LastWildcard = tbWildcard.Text;
 			Properties.Settings.Default.PrefixNewFilename = tbPrefix.Text;
 			Properties.Settings.Default.UniqueNewFilename = cbUnique.Text;
 			Properties.Settings.Default.SupplementNewFilename = cbSupplement.Text;
@@ -80,7 +81,6 @@ namespace PhotofilesRename
 
 		private void filldgvFolderContent()
 		{
-
 			dgvFolderContent.Rows.Clear();
 			btnSetNewNames.Enabled = false;
 			btnExecuteRename.Text = "";
@@ -88,8 +88,12 @@ namespace PhotofilesRename
 
 			if (tbFolder.Text.Length > 0 && Directory.Exists(tbFolder.Text))
 			{
+
+				if (tbFolder.Text.EndsWith(@"\") == false)
+				{
+					tbFolder.Text += @"\";
+				}
 				Image myImage;
-				PropertyItem propItem;
 
 				dgvFolderContent.Rows.Clear();
 				string[] fileEntries = Directory.GetFiles(tbFolder.Text, tbWildcard.Text);
@@ -120,7 +124,7 @@ namespace PhotofilesRename
 								pv = allPoprItem.FirstOrDefault(x => x.Id == 272);
 								if (pv != null)
 								{
-									cameramodel = r.Replace(Encoding.UTF8.GetString(pv.Value), "-", 2);
+									cameramodel = r.Replace(Encoding.UTF8.GetString(pv.Value), "-", 2).Trim('\0');
 								}
 
 								pv = allPoprItem.FirstOrDefault(x => x.Id == 270);
@@ -139,8 +143,6 @@ namespace PhotofilesRename
 						dateTakenAvail = false;
 						cameramodel = "";
 						phototitle = "";
-
-						MessageBox.Show(fileName + ": " + e.Message);
 					}
 
 					if (chkDateTaken.CheckState == CheckState.Unchecked || dateTakenAvail)
@@ -167,7 +169,7 @@ namespace PhotofilesRename
 							}
 						}
 
-						dgvFolderContent.Rows.Add(fileName.Replace(tbFolder.Text + @"\", ""), dateTaken, cm, phototitle);
+						dgvFolderContent.Rows.Add(fileName.Replace(tbFolder.Text, ""), dateTaken, cm, phototitle);
 					}
 
 					if ((dgvFolderContent.Rows.Count % 5) == 0) {
@@ -188,11 +190,6 @@ namespace PhotofilesRename
 			lblNumberOfFiles.Text = String.Format("{0:d} files", dgvFolderContent.Rows.Count);
 			Refresh();
 
-		}
-
-		private void tbWildcard_Leave(object sender, EventArgs e)
-		{
-			filldgvFolderContent();
 		}
 
 		private void btnSetNewNames_Click(object sender, EventArgs e)
@@ -310,8 +307,6 @@ namespace PhotofilesRename
 				{
 					dgvr.Cells[4].Value = "";
 				}
-
-
 			}
 
 			if (NumberOfNewNames > 0)
@@ -329,22 +324,29 @@ namespace PhotofilesRename
 		private void executeRename()
 		{
 			foreach (DataGridViewRow dgvr in dgvFolderContent.Rows) {
-				if (dgvr.Cells[4].Value.ToString().Length > 0)
+				string newfn = dgvr.Cells[4].Value.ToString();
+				if (newfn.Length > 0)
 				{
 					try
 					{
-						string curfn = tbFolder.Text + @"\" + dgvr.Cells[0].Value.ToString();
-						string newfn = tbFolder.Text + @"\" + dgvr.Cells[4].Value.ToString();
+						newfn = tbFolder.Text + newfn;
+						string curfn = tbFolder.Text + dgvr.Cells[0].Value.ToString();
 						if (File.Exists(curfn) && File.Exists(newfn) == false) {
 							File.Move(curfn, newfn);
 						}
 					}
 					catch (Exception e)
 					{
-						MessageBox.Show(dgvr.Cells[4].Value.ToString() + ": " + e.Message);
+						if (MessageBox.Show("Rename failed for " + newfn + ": " + e.Message, "Error", MessageBoxButtons.CancelTryContinue) == DialogResult.Cancel)
+						{
+							break;
+						}
 					}
 				}
 			}
+
+			dgvFolderContent.Rows.Clear();
+			btnSetNewNames.Enabled = false;
 		}
 
 		private void FillDataGridView_Click(object sender, EventArgs e)
@@ -363,8 +365,6 @@ namespace PhotofilesRename
 		private void btnExecuteRename_Click(object sender, EventArgs e)
 		{
 			executeRename();
-			filldgvFolderContent();
-			fillNewNames();
 		}
 
 		private int searchInFolderContent(string searchValue) 
@@ -380,6 +380,26 @@ namespace PhotofilesRename
 			}
 
 			return rv;
+		}
+
+		private void dgvFolderContent_RowEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.RowIndex >= 0)
+			{
+				string fn = tbFolder.Text + @"\" + dgvFolderContent.Rows[e.RowIndex].Cells[0].Value.ToString();
+				if (File.Exists(fn)) {
+					pbCurrentPhoto.Image = Image.FromFile(fn);
+				} 
+				else
+				{
+					pbCurrentPhoto.Image = null;
+				}
+
+			}
+			else
+			{
+				pbCurrentPhoto.Image = null;
+			}
 		}
 	}
 }
